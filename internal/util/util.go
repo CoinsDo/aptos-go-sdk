@@ -69,11 +69,10 @@ func UintToU16(u uint) (uint16, error) {
 }
 
 func UintToU32(u uint) (uint32, error) {
-	if u > math.MaxUint32 {
-		return 0, fmt.Errorf("u %d is greater than %d", u, math.MaxUint32)
+	if uint64(u) > uint64(math.MaxUint32) {
+		return 0, fmt.Errorf("u %d is greater than %d", u, uint64(math.MaxUint32))
 	}
-	val := uint32(u)
-	return val, nil
+	return uint32(u), nil
 }
 
 func UintToUBigInt(u uint) (*big.Int, error) {
@@ -118,14 +117,13 @@ func IntToU16(u int) (uint16, error) {
 }
 
 func IntToU32(u int) (uint32, error) {
-	if u > math.MaxUint32 {
-		return 0, fmt.Errorf("u %d is greater than %d", u, math.MaxUint32)
-	} else if u < 0 {
+	if u < 0 {
 		return 0, fmt.Errorf("u %d is less than 0", u)
 	}
-
-	val := uint32(u)
-	return val, nil
+	if int64(u) > int64(math.MaxUint32) {
+		return 0, fmt.Errorf("u %d is greater than %d", u, uint64(math.MaxUint32))
+	}
+	return uint32(u), nil
 }
 
 func IntToU64(u int) (uint64, error) {
